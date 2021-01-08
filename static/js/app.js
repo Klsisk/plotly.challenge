@@ -1,4 +1,4 @@
-// Create a function plotting (Bar, gauge, bubble)
+//Create a function plotting (Bar, gauge, bubble)
 function plotting(id) {
   // Get the data from the json file
   d3.json("data/samples.json").then((importedData) => {
@@ -12,7 +12,6 @@ function plotting(id) {
     });
   });
 }
-
 //Create a function for building the charts
 function buildChart(id) {
   d3.json("data/samples.json").then((importedData) => {
@@ -23,6 +22,13 @@ function buildChart(id) {
     var otu_labels = results.otu_labels;
     var sample_values = results.sample_values;
     // Bubble Chart
+    var layoutForBubble = {
+      title: "Bacteria Cultures Per Sample",
+      margin: {t: 0},
+      hovermode: "closest",
+      xaxis: {title: "OTU ID"},
+      margin: {t: 30}
+    };
     var dataForBubble = [{
             x: otu_ids,
             y: sample_values,
@@ -34,35 +40,34 @@ function buildChart(id) {
               colorscale: "Picnic"
             }
     }];
-          
-          Plotly.newPlot("bubble", dataForBubble, layoutForBubble);
+    
+    Plotly.newPlot("bubble", dataForBubble, layoutForBubble);
+	
+	//Horizontal Bar Chart
+	// Slice the first 10 objects for plotting and reverse the array due to Plotly's default
+	var yticks = otu_ids.slice(0, 10).map(otuName => `OTU ${otuName}`).reverse();
+	var dataForHorizontalBar = [
+	  {
+		y: yticks,
+		x: sample_values.slice(0, 10).reverse(),
+		text: otu_labels.slice(0, 10).reverse(),
+		type: "bar",
+		orientation: "h",
+	  }];
+	var layoutForBar = {
+	title: "Top 10 OTUs Found in Individual",
+	margin: {
+	  l: 100,
+	  r: 100,
+	  t: 100,
+	  b: 100
+	}
+	};
+	Plotly.newPlot("bar", dataForHorizontalBar, layoutForBar);
   });
 }
-
-//Horizontal Bar Chart
-// Slice the first 10 objects for plotting and reverse the array due to Plotly's default
-var yticks = otu_ids.slice(0, 10).map(otuName => `OTU ${otuName}`).reverse();
-var dataForHorizontalBar = [
-  {
-    y: yticks,
-    x: sample_values.slice(0, 10).reverse(),
-    text: otu_labels.slice(0, 10).reverse(),
-    type: "bar",
-    orientation: "h",
-  }];
-  var layoutForBar = {
-    title: "Top 10 OTUs Found in Individual",
-    margin: {
-      l: 100,
-      r: 100,
-      t: 100,
-      b: 100
-    }
-  };
-    Plotly.newPlot("bar", dataForHorizontalBar, layoutForBar);
-
 // Create init function
- function init() {
+function init() {
  var dropdownMenu = d3.select("#selDataset");
   d3.json("data/samples.json").then((data) => {
     var dataset = data.names;
@@ -77,11 +82,9 @@ var dataForHorizontalBar = [
     plotting(sample1);
   });
 }
-// Create update function
-function update(newData) {
+// Create optionChanged function
+function optionChanged(newData) {
   buildChart(newData);
   plotting(newData);
 }
 init();
-
- 
