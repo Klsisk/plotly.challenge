@@ -12,11 +12,11 @@ The dataset reveals that a small handful of microbial species (also called opera
 ![image](https://user-images.githubusercontent.com/69765842/104057402-1f8f7c80-51c0-11eb-8aae-fd24d8b75c6d.png)
 
 3. Create a bubble chart that displays each sample.
-  - Use otu_ids for the x values.
-  - Use sample_values for the y values.
-  - Use sample_values for the marker size. 
-  - Use otu_ids for the marker colors.
-  - Use otu_labels for the text values.
+    - Use otu_ids for the x values.
+    - Use sample_values for the y values.
+    - Use sample_values for the marker size. 
+    - Use otu_ids for the marker colors.
+    - Use otu_labels for the text values.
   
   ![image](https://user-images.githubusercontent.com/69765842/104057441-2a4a1180-51c0-11eb-88a6-90a0b61fe522.png)
  
