@@ -28,7 +28,6 @@ function buildChart(sample) {
       hovermode: "closest",
       xaxis: {title: "<b>OTU ID</b>"},
       margin: {t: 30},
-      //titlefont: {size: 30 }
       font:{
         family:'Georgia, serif',
         size:14, 
